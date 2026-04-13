@@ -2,6 +2,9 @@
 
 binString = input("Enter an instruction:\n ")
 
+d_mem = [0] * 32
+
+
 opcode = binString[25:32]
 print("Opcode:", opcode)
 
@@ -149,6 +152,28 @@ def handleUJType():
     print("Operation: ", operation)
     print("rd: x"+ rd)
     print("Immediate: "+ immDec+"(or "+ hex(int(imm)) +")")
+
+#assuming that address comes in as an int rather than as a hex string. If it does instead come in as a hex string,
+#that's an easy adjustment. However, out existing decoding work from HW3 turns everything into decimal ints,
+#so this is a safe bet.
+def Mem(address, value):
+    print("Memory: ", d_mem)
+
+    print("Address: ", address)
+    print("Value: ", value)
+
+    index = int(address/4)
+
+    d_mem[index] = value
+
+    print("Saved value ", value, " to address ", address, "which corresponds to index ", index, "in the memory array.")
+
+    print("Memory: ", d_mem)
+
+    #Excessive print statements for the moment, will remove before submission.
+
+    return
+
 
 switcher = {
     "0110011": handleRType,
