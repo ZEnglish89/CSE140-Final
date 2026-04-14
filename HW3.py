@@ -4,6 +4,8 @@ binString = input("Enter an instruction:\n ")
 
 d_mem = [0] * 32
 
+total_clock_cycles = 0
+
 
 opcode = binString[25:32]
 print("Opcode:", opcode)
@@ -154,9 +156,12 @@ def handleUJType():
     print("Immediate: "+ immDec+"(or "+ hex(int(imm)) +")")
 
 #assuming that address comes in as an int rather than as a hex string. If it does instead come in as a hex string,
-#that's an easy adjustment. However, out existing decoding work from HW3 turns everything into decimal ints,
+#that's an easy adjustment. However, our existing decoding work from HW3 turns everything into decimal ints,
 #so this is a safe bet.
-def Mem(address, value):
+
+#Inputs: address (int which is a multiple of 4), value (int, optional, only for store instructions)
+#Outputs: For store instructions, no output. For load instructions, returns value loaded from memory (int).
+def Mem(address, value = None):
     print("Memory: ", d_mem)
 
     print("Address: ", address)
@@ -164,15 +169,36 @@ def Mem(address, value):
 
     index = int(address/4)
 
-    d_mem[index] = value
+    if value is not None:
 
-    print("Saved value ", value, " to address ", address, "which corresponds to index ", index, "in the memory array.")
+        d_mem[index] = value
 
-    print("Memory: ", d_mem)
+        print("Saved value ", value, " to address ", address, "which corresponds to index ", index, "in the memory array.")
+        print("Memory: ", d_mem)
 
-    #Excessive print statements for the moment, will remove before submission.
+        return None
+    
+    else:
 
-    return
+        value = d_mem[index]
+
+        print("Loaded value ", value, " from address ", address, "which corresponds to index ", index, "in the memory array.")
+        
+        return value
+
+#inputs: register (int, as index of register file), value (int, regardless of where it came from)
+#outputs: none, but register file is written into and total clock cycles is incremented.
+#register is only actually written to if RegWrite is true, which is a global variable set by ControlUnit().
+#rf is a global variable containing all register values.
+#neither global variable exists at the time of writing.
+def WriteBack(register=None, value=None):
+
+    if RegWrite:
+        print("Write Back: Register x"+ register + " gets value " + str(value))
+
+        rf[register] = value
+
+    total_clock_cycles += 1
 
 
 switcher = {
