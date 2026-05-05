@@ -19,8 +19,7 @@ def WriteBack(mem_result):
 
     total_clock_cycles += 1
     print(f"total_clock_cycles {total_clock_cycles} :")
-    print(f"pc is modified to {hex(fetch.pc)}")
-    
+   
 
     
 
