@@ -2,6 +2,9 @@ from fetch import fetch
 
 rf = [0] * 32
 
+rfNames = ["zero","ra","sp","gp","tp","t0","t1","t2","s0","s1","a0","a1","a2","a3","a4","a5","a6","a7","s2","s3","s4","s5","s6","s7","s8","s9","s10","s11","t3","t4","t5","t6"]
+
+
 #control signals
 regWrite = 0
 memRead = 0
@@ -142,13 +145,13 @@ def handleRType(binString):
     funct3 = str(int(funct3, 2))
     funct7 = str(int(funct7, 2))
 
-    print("Instruction Type: R")
-    print("Operation: ", operation)
-    print("rs1: x"+ rs1)
-    print("rs2: x"+ rs2)
-    print("rd: x"+ rd)
-    print("funct3: "+ funct3)
-    print("funct7: "+ funct7)
+#    print("Instruction Type: R")
+#    print("Operation: ", operation)
+#    print("rs1: x"+ rs1)
+#    print("rs2: x"+ rs2)
+#    print("rd: x"+ rd)
+#    print("funct3: "+ funct3)
+#    print("funct7: "+ funct7)
 
     rs1Val = rf[int(rs1)]
     rs2Val = rf[int(rs2)]
@@ -191,11 +194,11 @@ def handleIType(binString):
     funct3 = str(int(funct3, 2))
 
 
-    print("Instruction Type: I")
-    print("Operation: ", operation)
-    print("rs1: x"+ rs1)
-    print("rd: x"+ rd)
-    print("Immediate: "+ immDec+"(or "+ hex(int(imm)) +")")
+#    print("Instruction Type: I")
+#    print("Operation: ", operation)
+#    print("rs1: x"+ rs1)
+#    print("rd: x"+ rd)
+#    print("Immediate: "+ immDec+"(or "+ hex(int(imm)) +")")
 
     rs1_val = rf[int(rs1)]
 
@@ -224,11 +227,11 @@ def handleSType(binString):
 
     funct3 = str(int(funct3, 2))
 
-    print("Instruction Type: S")
-    print("Operation: ", operation)
-    print("rs1: x"+ rs1)
-    print("rs2: x"+ rs2)
-    print("Immediate: "+ immDec+"(or "+ hex(int(imm)) +")")
+#    print("Instruction Type: S")
+#    print("Operation: ", operation)
+#    print("rs1: x"+ rs1)
+#    print("rs2: x"+ rs2)
+#    print("Immediate: "+ immDec+"(or "+ hex(int(imm)) +")")
 
     return {
         "type": "S", "operation": operation,
@@ -254,11 +257,11 @@ def handleSBType(binString):
 
     funct3 = str(int(funct3, 2))
 
-    print("Instruction Type: SB")
-    print("Operation: ", operation)
-    print("rs1: x"+ rs1)
-    print("rs2: x"+ rs2)
-    print("Immediate: "+ immDec+"(or "+ hex(int(imm)) +")")
+#    print("Instruction Type: SB")
+#    print("Operation: ", operation)
+#    print("rs1: x"+ rs1)
+#    print("rs2: x"+ rs2)
+#    print("Immediate: "+ immDec+"(or "+ hex(int(imm)) +")")
 
     return {
         "type": "SB", "operation": operation,
@@ -284,10 +287,10 @@ def handleUJType(binString):
 
     operation = UJOperations.get(opcode, "Unknown UJ-Type operation")
 
-    print("Instruction Type: UJ")
-    print("Operation: ", operation)
-    print("rd: x"+ rd)
-    print("Immediate: "+ immDec+"(or "+ hex(int(imm)) +")")
+#    print("Instruction Type: UJ")
+#    print("Operation: ", operation)
+#    print("rd: x"+ rd)
+#    print("Immediate: "+ immDec+"(or "+ hex(int(imm)) +")")
 
     return {
         "type": "UJ", "operation": "JAL",
@@ -314,7 +317,7 @@ def decode(binString):
     elif opcode == "1101111":    # UJ-type
         return handleUJType(binString)
     else:
-        print("Unknown instruction type")
+#        print("Unknown instruction type")
         return None
 
 

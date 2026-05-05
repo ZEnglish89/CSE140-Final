@@ -54,5 +54,5 @@ if __name__ == "__main__":
     instr = "00000000001100001000001010110011"
     decoded = decode.decode(instr)
     result = execute(decoded)
-    print("Execute result:", result)
+#    print("Execute result:", result)
 
