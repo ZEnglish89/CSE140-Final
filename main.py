@@ -13,21 +13,29 @@ def load_instruction_memory():
     return imem
 
 def run_cpu(imem):
-    # Branch state is passed into fetch on the next cycle.
-    decode.rf[1] = 0x20   # x1 = 32
-    decode.rf[2] = 0x5    # x2 = 5
-    decode.rf[10] = 0x70   
-    decode.rf[11] = 0x4
 
-    mem.d_mem[0x70 //4] = 0x5
-    mem.d_mem[0x74 //4] = 0x10
+# initial state for sample 1
+    decode.rf = [0] * 32   # all zeroes except for the values below.
+
+    decode.rf[1] = 32
+    decode.rf[2] = 5
+    decode.rf[10] = (7*16)
+    decode.rf[11] = 4
+
+    mem.d_mem = [0] * 32   # all zeroes except for the values below.
+
+    mem.d_mem[28] = 5
+    mem.d_mem[29] = 16
+
 # initial state for sample 2
-    # decode.rf[8]  = 0x20   # s0
-    # decode.rf[10] = 0x5    # a0
-    # decode.rf[11] = 0x2    # a1
-    # decode.rf[12] = 0xa    # a2
-    # decode.rf[13] = 0xf    # a3
-    # mem.d_mem = [0] * 32   # all zeros
+#    mem.d_mem = [0] * 32   # all zeroes.
+#    decode.rf = [0] * 32   # all zeroes except for the values below.
+#    decode.rf[8]  = 0x20   # s0
+#    decode.rf[10] = 0x5    # a0
+#    decode.rf[11] = 0x2    # a1
+#    decode.rf[12] = 0xa    # a2
+#    decode.rf[13] = 0xf    # a3
+
 
     branch_taken = False
     branch_target = None
@@ -49,19 +57,19 @@ def run_cpu(imem):
         jump = False
         jump_target = None  
 
-        print("\nFetched instruction:", instruction)
+#        print("\nFetched instruction:", instruction)
 
         decoded = decode.decode(instruction)
         if decoded is None:
-            print("Stopping: unknown instruction")
+#            print("Stopping: unknown instruction")
             break
 
-        print("Decoded output:", decoded)
+#        print("Decoded output:", decoded)
 
         ex_result = execute.execute(decoded)
-        print("DEBUG - decode.jump:", decode.jump, "jump_target:", execute.jump_target, "jump var:", jump)
+#        print("DEBUG - decode.jump:", decode.jump, "jump_target:", execute.jump_target, "jump var:", jump)
 
-        print("Execute output:", ex_result)
+#        print("Execute output:", ex_result)
 
         if decode.memRead:
             mem_result = mem.Mem(ex_result) 
@@ -85,7 +93,7 @@ def run_cpu(imem):
         if decode.branch and execute.alu_zero:
             branch_target = execute.branch_target
             branch_taken = True
-            print("Branch taken to address", branch_target)
+#            print("Branch taken to address", branch_target)
         if decode.jump == 1:
             jump = True
             jump_target = execute.jump_target
@@ -99,9 +107,10 @@ def run_cpu(imem):
     
     
 
-        print("Register file after writeback:", decode.rf)
+#        print("Register file after writeback:", decode.rf)
 
-    print("\nProgram complete. final register file:", decode.rf)
+#    print("\nProgram complete. final register file:", decode.rf)
+    print("\nprogram terminated:\n total execution time is " + str(writeback.total_clock_cycles) + " cycles.")
 
 
 if __name__ == "__main__":

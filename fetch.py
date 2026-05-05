@@ -3,7 +3,7 @@ pc = 0
 def fetch(imem, branchTarget=None, branchTaken=False, jumpTarget=None, jump=False):
     global pc
     
-    print(f"FETCH DEBUG - pc={pc}, jump={jump}, jumpTarget={jumpTarget}")
+#    print(f"FETCH DEBUG - pc={pc}, jump={jump}, jumpTarget={jumpTarget}")
     
     if jump and jumpTarget is not None:
         pc = jumpTarget
@@ -16,6 +16,6 @@ def fetch(imem, branchTarget=None, branchTaken=False, jumpTarget=None, jump=Fals
     
     
 
-    print(f"FETCH DEBUG - pc after={pc}")
+#    print(f"FETCH DEBUG - pc after={pc}")
     return instruction
     
