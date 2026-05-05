@@ -69,7 +69,7 @@ def controlUnit(opcode, funct3=None, funct7=None):
         memToReg = 0
         branch = 0
         ALUop = "00"
-        jump = 1        # always jump
+        jump = 1        
         jumpReg = 0     # jump target is pc + imm
     elif opcode == "1100111":   # JALR
         regWrite = 1    # writes return address to rd
@@ -79,7 +79,7 @@ def controlUnit(opcode, funct3=None, funct7=None):
         memToReg = 0
         branch = 0
         ALUop = "00"
-        jump = 1        # always jump
+        jump = 1        
         jumpReg = 1     # jump target is rs1 + imm
 
     aluControl(ALUop, funct3, funct7)

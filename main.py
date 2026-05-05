@@ -21,7 +21,7 @@ def run_cpu(imem):
 
     mem.d_mem[0x70 //4] = 0x5
     mem.d_mem[0x74 //4] = 0x10
-
+# initial state for sample 2
     # decode.rf[8]  = 0x20   # s0
     # decode.rf[10] = 0x5    # a0
     # decode.rf[11] = 0x2    # a1
@@ -41,6 +41,7 @@ def run_cpu(imem):
             break
 
         instruction = fetch.fetch(imem, branchTarget=branch_target, branchTaken=branch_taken, jumpTarget=jump_target, jump=jump)
+        next_pc = fetch.pc
 
         # Clear pending branch after it is consumed by fetch.
         branch_taken = False
@@ -64,16 +65,19 @@ def run_cpu(imem):
 
         if decode.memRead:
             mem_result = mem.Mem(ex_result) 
-            mem_result["pc_plus_4"] = ex_result["pc_plus_4"]  
+            mem_result["pc_plus_4"] = ex_result["pc_plus_4"]
+            mem_result["next_pc"] = next_pc
         elif decode.memWrite:
             mem_result = mem.Mem(ex_result)  # use return value directly
             mem_result["pc_plus_4"] = ex_result["pc_plus_4"]  # for JAL and JALR writeback
+            mem_result["next_pc"] = next_pc
         else:
             mem_result = {
                 "rd": ex_result["rd"],
                 "alu_result": ex_result["alu_result"],
                 "mem_result": None,
                 "pc_plus_4": ex_result["pc_plus_4"],
+                "next_pc": next_pc
             }
 
         writeback.WriteBack(mem_result)
@@ -85,6 +89,15 @@ def run_cpu(imem):
         if decode.jump == 1:
             jump = True
             jump_target = execute.jump_target
+
+        if jump:
+             print(f"pc is modified to {hex(jump_target)}")
+        elif branch_taken:
+             print(f"pc is modified to {hex(branch_target)}")
+        else:
+             print(f"pc is modified to {hex(fetch.pc)}")
+    
+    
 
         print("Register file after writeback:", decode.rf)
 
