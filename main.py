@@ -15,26 +15,26 @@ def load_instruction_memory():
 def run_cpu(imem):
 
 # initial state for sample 1
-    decode.rf = [0] * 32   # all zeroes except for the values below.
-
-    decode.rf[1] = 32
-    decode.rf[2] = 5
-    decode.rf[10] = (7*16)
-    decode.rf[11] = 4
-
-    mem.d_mem = [0] * 32   # all zeroes except for the values below.
-
-    mem.d_mem[28] = 5
-    mem.d_mem[29] = 16
+#    decode.rf = [0] * 32   # all zeroes except for the values below.
+#
+#    decode.rf[1] = 32
+#    decode.rf[2] = 5
+#    decode.rf[10] = (7*16)
+#    decode.rf[11] = 4
+#
+#   mem.d_mem = [0] * 32   # all zeroes except for the values below.
+#
+#    mem.d_mem[28] = 5
+#    mem.d_mem[29] = 16
 
 # initial state for sample 2
-#    mem.d_mem = [0] * 32   # all zeroes.
-#    decode.rf = [0] * 32   # all zeroes except for the values below.
-#    decode.rf[8]  = 0x20   # s0
-#    decode.rf[10] = 0x5    # a0
-#    decode.rf[11] = 0x2    # a1
-#    decode.rf[12] = 0xa    # a2
-#    decode.rf[13] = 0xf    # a3
+    mem.d_mem = [0] * 32   # all zeroes.
+    decode.rf = [0] * 32   # all zeroes except for the values below.
+    decode.rf[8]  = 0x20   # s0
+    decode.rf[10] = 0x5    # a0
+    decode.rf[11] = 0x2    # a1
+    decode.rf[12] = 0xa    # a2
+    decode.rf[13] = 0xf    # a3
 
 
     branch_taken = False
